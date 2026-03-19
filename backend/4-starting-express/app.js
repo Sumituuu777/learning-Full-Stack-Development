@@ -1,8 +1,7 @@
 const http=require('http');
 const express=require('express')
 const fs=require('fs');
-const { URLSearchParams } = require('url');
-const { log } = require('console');
+const bodyparser=require('body-parser');
 
 const app=express();
 const server=http.createServer(app);
@@ -11,6 +10,8 @@ server.listen(PORT,()=>{
     console.log(`server running at http://localhost:${PORT}/`);
     
 });
+
+app.use(bodyparser.urlencoded());
 app.get('/',(req,res,next)=>{
     res.send(`<!DOCTYPE html>
                 <html lang="en">
@@ -27,24 +28,8 @@ app.get('/',(req,res,next)=>{
                 </body>
                 </html>`)
 });
-app.post('/submit-details',(req,res,next)=>{
-    const bufferArr=[];
-            req.on('data',(chunk)=>{
-                console.log(chunk);
-                bufferArr.push(chunk);
-            })
-            req.on('end',()=>{
-                const parsedbufferArr=Buffer.concat(bufferArr).toString();
-                console.log(parsedbufferArr);
-    
-                const parsedpairs=new URLSearchParams(parsedbufferArr);
-    
-                const jsonObj={};
-                for (const [key,value] of parsedpairs.entries()){
-                    jsonObj[key]=value;
-                }
-                console.log(JSON.stringify(jsonObj))
-                fs.writeFile('user-details.json',JSON.stringify(jsonObj),(err)=>{
+app.post('/submit-details',(req,res,next)=>{ 
+                fs.writeFile('user-details.json',JSON.stringify(req.body),(err)=>{
                     if(err){
                         console.log(err);  
                     }else{
@@ -52,8 +37,6 @@ app.post('/submit-details',(req,res,next)=>{
                         res.send('<h1>Data received successfully</h1>');
                     }
                 });
-                
-            });
 });
 app.get('/products',(req,res,next)=>{
     res.send('<h1>Products list...</h1>');
