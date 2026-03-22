@@ -17,7 +17,7 @@ server.listen(3000,()=>{
     console.log('server running at http://localhost:3000/');
     
 });
-//body parser used
+//body parser used// lekin isko express.urlencoded({extended:true}) se  replace karna hai
 app.use(bodyparser.urlencoded({extended:true}));
 
 app.use(express.static(path.join(rootdir,"public")))
