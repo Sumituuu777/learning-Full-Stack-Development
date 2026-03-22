@@ -2,20 +2,52 @@
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-<%-include('partials/nav') %>
+    <%-include('partials/nav') %>
 
     <!-- Main Content -->
     <div class="p-6">
-        <h2 class="text-5xl font-bold text-red-500 mb-6 flex justify-center items-center">Welcome to our Airbnb</h2>
+        <h2 class="text-5xl font-bold text-red-500 mb-10 text-center">
+            Welcome to our Airbnb
+        </h2>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <% homes.forEach(home => { %>
                 
                 <!-- Card -->
-                <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition">
-                    <h3 class="text-xl font-bold text-gray-800">
-                        <%= home.houseName %>
-                    </h3>
+                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
+                    
+                    <!-- Image -->
+                    <img 
+                        src="<%= home.photoURL %>" 
+                        alt="home image"
+                        class="w-full h-52 object-cover"
+                    >
+
+                    <!-- Card Content -->
+                    <div class="p-4">
+                        
+                        <!-- Location + Rating -->
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-gray-700 font-medium">
+                                📍 <%= home.location || "Unknown location" %>
+                            </p>
+                            <p class="text-yellow-500 font-semibold">
+                                ⭐ <%= home.rating || "4.5" %>
+                            </p>
+                        </div>
+
+                        <!-- House Name -->
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">
+                            <%= home.houseName %>
+                        </h3>
+
+                        <!-- Price -->
+                        <p class="text-gray-900 font-semibold">
+                            ₹<%= home.price || "1000" %> 
+                            <span class="text-gray-500 font-normal">/ night</span>
+                        </p>
+
+                    </div>
                 </div>
 
             <% }); %>
