@@ -13,6 +13,7 @@ module.exports= class Home{
         this.photoURL=photoURL
     }
     save(callback){
+        this.id=Math.random().toString()
         Home.fetchAll((registeredHomes)=>{
             registeredHomes.push(this);
             fs.writeFile(filepath,JSON.stringify(registeredHomes),callback)
@@ -26,5 +27,11 @@ module.exports= class Home{
             }
             callback(homesdata); 
         });
+    }
+    static findBYId(id,callback){
+        this.fetchAll((homes)=>{
+            const home=homes.find((home)=>home.id===id)
+            callback(home);
+        })
     }
 }

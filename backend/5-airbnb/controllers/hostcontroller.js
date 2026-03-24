@@ -9,7 +9,7 @@ exports.postAddhome=(req,res,next)=>{
         if(err){
             res.redirect('/')
         }else{
-        res.render('home-added',{title:'Home Added'});
+        res.render('/home-added',{title:"home Added"});
         }
     });
 };

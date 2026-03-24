@@ -1,1 +1,34 @@
-[{"houseName":"sumit's house","price":"987","location":"Goa","rating":"4.9","photoURL":"/photos/goa2.png"},{"houseName":"sumit's house","price":"987","location":"Goa","rating":"4.9","photoURL":"/photos/goa2.png"},{"houseName":"next house","price":"987","location":"delhi","rating":"4.9","photoURL":"/photos/goa2.png"},{"houseName":"Ghar","price":"1000","location":"GOa","rating":"4.5","photoURL":"/photos/goa2.png"},{"houseName":"sumit's house","price":"1000","location":"delhi","rating":"4.9","photoURL":"/photos/goa2.png"}]
+[
+    {
+        "houseName": "sumit's house",
+        "price": "987",
+        "location": "Goa",
+        "rating": "4.9",
+        "photoURL": "/photos/goa2.png",
+        "id": "1"
+    },
+    {
+        "houseName": "IIIT Ranchi's Stay",
+        "price": "1499",
+        "location": "Goa",
+        "rating": "4.9",
+        "photoURL": "/photos/IIIT Ranchi.png",
+        "id": "2"
+    },
+    {
+        "houseName": "utsav",
+        "price": "1199",
+        "location": "shimla",
+        "rating": "5",
+        "photoURL": "/photos/darjeeling1.png",
+        "id": "0.8766604162715618"
+    },
+    {
+        "houseName": "Ghaat Ghar",
+        "price": "799",
+        "location": "Banaras",
+        "rating": "4.7",
+        "photoURL": "/photos/varanshi2.png",
+        "id": "0.3318069156790403"
+    }
+]
