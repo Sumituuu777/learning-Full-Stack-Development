@@ -45,3 +45,12 @@ exports.postEdithome=(req,res,next)=>{
         }
     });
 }
+exports.getDeletehome=(req,res,next)=>{
+    const id=req.params.homeId;
+    Home.deleteById(id,err=>{
+        if(err){
+            console.log("Error occured while deleting",err);
+        }
+        res.redirect("/availablehomes")
+    })
+}

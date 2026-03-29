@@ -57,7 +57,7 @@
                         <!-- View Details Button -->
                         <a 
                             href="/home/<%= home.id %>"
-                            class="block text-center bg-red-500 text-white py-2 rounded-xl hover:bg-red-600 transition"
+                            class="block text-center bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 transition"
                         >
                             View Details
                         </a>
@@ -66,6 +66,12 @@
                             class="block text-center bg-blue-500 text-white my-1 py-2 rounded-xl hover:bg-blue-600 transition"
                         >
                             Edit
+                        </a>
+                        <a 
+                            href="/host/delete-home/<%= home.id %>"
+                            class="block text-center bg-red-500 text-white my-1 py-2 rounded-xl hover:bg-red-600 transition"
+                        >
+                            Delete
                         </a>
 
                     </div>
