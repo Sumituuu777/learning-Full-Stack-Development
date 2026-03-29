@@ -7,11 +7,11 @@
     <!-- Main Content -->
     <div class="p-6">
         <h2 class="text-5xl font-bold text-red-500 mb-10 text-center">
-            Available Homes
+            favorites
         </h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <% homes.forEach(home => { %>
+            <% favorites.forEach(home => { %>
                 
                 <!-- Card -->
                 <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
@@ -57,21 +57,9 @@
                         <!-- View Details Button -->
                         <a 
                             href="/home/<%= home.id %>"
-                            class="block text-center bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 transition"
+                            class="block text-center bg-red-500 text-white py-2 rounded-xl hover:bg-red-600 transition"
                         >
                             View Details
-                        </a>
-                        <a 
-                            href="/host/edit-home/<%= home.id %>?editing=true"
-                            class="block text-center bg-blue-500 text-white my-1 py-2 rounded-xl hover:bg-blue-600 transition"
-                        >
-                            Edit
-                        </a>
-                        <a 
-                            href="/host/delete-home/<%= home.id %>"
-                            class="block text-center bg-red-500 text-white my-1 py-2 rounded-xl hover:bg-red-600 transition"
-                        >
-                            Delete
                         </a>
 
                     </div>
