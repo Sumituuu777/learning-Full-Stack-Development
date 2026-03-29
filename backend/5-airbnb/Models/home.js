@@ -13,9 +13,25 @@ module.exports= class Home{
         this.photoURL=photoURL
     }
     save(callback){
-        this.id=Math.random().toString()
+        //updating home
         Home.fetchAll((registeredHomes)=>{
-            registeredHomes.push(this);
+            // console.log(registeredHomes,this);
+            
+            if(this.id){
+                registeredHomes=registeredHomes.map((home)=>{
+                    if(home.id===this.id){
+                        return this;
+                    }
+                    return home;
+                });
+            }
+            // for adding home
+            else{
+                // console.log("NEW HOME");
+                this.id=Math.random().toString()
+                registeredHomes.push(this);
+            }
+
             fs.writeFile(filepath,JSON.stringify(registeredHomes),callback)
         });
     }

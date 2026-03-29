@@ -1,17 +1,17 @@
-<%-include('partials/head') %>
+<%-include('../partials/head') %>
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    <%-include('partials/nav') %>
+    <%-include('../partials/nav') %>
 
     <!-- Main Content -->
     <div class="p-6">
         <h2 class="text-5xl font-bold text-red-500 mb-10 text-center">
-            favorites
+            Available Homes
         </h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <% favorites.forEach(home => { %>
+            <% homes.forEach(home => { %>
                 
                 <!-- Card -->
                 <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
@@ -21,13 +21,13 @@
 
                         <!-- Image -->
                         <img 
-                            src="<%= home.image || home.photoURL || 'https://via.placeholder.com/400' %>" 
+                            src="<%= home.photoURL %>" 
                             alt="home image"
                             class="w-full h-52 object-cover"
                         >
 
                         <!-- Wishlist Button -->
-                        <%-include('partials/favorites',{home:home})%>
+                        <%-include('../partials/favorites',{home:home})%>
                     </div>
 
                     <!-- Card Content -->
@@ -60,6 +60,12 @@
                             class="block text-center bg-red-500 text-white py-2 rounded-xl hover:bg-red-600 transition"
                         >
                             View Details
+                        </a>
+                        <a 
+                            href="/host/edit-home/<%= home.id %>?editing=true"
+                            class="block text-center bg-blue-500 text-white my-1 py-2 rounded-xl hover:bg-blue-600 transition"
+                        >
+                            Edit
                         </a>
 
                     </div>
