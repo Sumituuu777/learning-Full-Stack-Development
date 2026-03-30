@@ -1,59 +1,47 @@
-const fs=require('fs');
-const path=require('path');
-const rootdir=require('../util/path');
-
-const filepath=path.join(rootdir,'data','homes.json')
+const airbnbdb=require('../util/database-util')
 
 module.exports= class Home{
-    constructor(houseName,price,location,rating,photoURL){
+    constructor(houseName,price,location,rating,photoURL,description){
         this.houseName=houseName,
         this.price=price,
         this.location=location,
         this.rating=rating,
-        this.photoURL=photoURL
+        this.photoURL=photoURL,
+        this.description=description
     }
-    save(callback){
-        //updating home
-        Home.fetchAll((registeredHomes)=>{
-            // console.log(registeredHomes,this);
-            
+    save(){
             if(this.id){
-                registeredHomes=registeredHomes.map((home)=>{
-                    if(home.id===this.id){
-                        return this;
-                    }
-                    return home;
-                });
+                        return airbnbdb.execute(
+                            "UPDATE new_table SET houseName=?, price=?, location=?, rating=?, photoURL=?, description=? WHERE id=?",
+                            [this.houseName,
+                            this.price,
+                            this.location,
+                            this.rating,
+                            this.photoURL,
+                            this.description,
+                            this.id
+                            ]
+                        )
             }
-            // for adding home
             else{
-                // console.log("NEW HOME");
-                this.id=Math.random().toString()
-                registeredHomes.push(this);
+                return airbnbdb.execute(
+                    "INSERT INTO new_table (houseName,price,location,rating,photoURL,description) VALUES (?,?,?,?,?,?)",
+                    [this.houseName,
+                    this.price,
+                    this.location,
+                    this.rating,
+                    this.photoURL,
+                    this.description]
+       )
             }
-
-            fs.writeFile(filepath,JSON.stringify(registeredHomes),callback)
-        });
     }
-    static fetchAll(callback){
-        fs.readFile(filepath, (err,data)=>{
-            let homesdata=[];
-            if(!err){
-                homesdata=JSON.parse(data); 
-            }
-            callback(homesdata); 
-        });
+    static fetchAll(){
+        return airbnbdb.execute("SELECT * FROM new_table")
     }
-    static findBYId(id,callback){
-        this.fetchAll((homes)=>{
-            const home=homes.find((home)=>home.id===id)
-            callback(home);
-        })
+    static findBYId(id){
+        return airbnbdb.execute("SELECT * FROM new_table WHERE id=?",[id])
     }
-    static deleteById(id,callback){
-        this.fetchAll((homes)=>{
-            const updatedHomes=homes.filter((home)=>home.id!==id);
-            fs.writeFile(filepath,JSON.stringify(updatedHomes),callback)
-        })
+    static deleteById(id){
+        return airbnbdb.execute("DELETE FROM new_table WHERE id=?",[id])
     }
 }

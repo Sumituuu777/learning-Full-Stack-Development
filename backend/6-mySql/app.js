@@ -17,11 +17,7 @@ server.listen(3000,()=>{
     console.log('server running at http://localhost:3000/');
     
 });
-const airbnbdb=require('./util/database-util')
-// from ke baad table ka naam likhna  hai
-airbnbdb.execute("SELECT * FROM new_table").then(([rows,feilds])=>{
-    console.log(rows);
-})
+
 //body parser used// lekin isko express.urlencoded({extended:true}) se  replace karna hai
 app.use(bodyparser.urlencoded({extended:true}));
 
