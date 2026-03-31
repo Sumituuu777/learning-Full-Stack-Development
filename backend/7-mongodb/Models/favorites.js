@@ -1,31 +1,21 @@
-const fs=require('fs');
-const path=require('path');
-const rootdir=require('../util/path');
-
-const favoritespath=path.join(rootdir,'data','favorites.json')
+const { ObjectId } = require("mongodb");
+const { getdb } = require("../util/database-util");
 
 module.exports= class Favorites{
-    static addFavorites(homeID){
-    this.getFavorites((favorites)=>{
-        if(favorites.includes(homeID)){
-            console.log("home already in favorites")
-        }else{
-            favorites.push(homeID);
-            fs.writeFile(favoritespath,JSON.stringify(favorites),err=>{
-                if(err){
-                    console.log('file writing',err);
-                }
-            })
+    constructor(homeId){
+        this.homeId=homeId
+    }
+    addFavorites(){ 
+        const db=getdb();
+        return db.collection("favorites").insertOne(this)
+
+    }
+    static getFavorites(){
+        const db=getdb();
+        return db.collection("favorites").find().toArray()    
+    }
+    static deleteById(homeId){
+            const db=getdb();
+            return db.collection("favorites").deleteOne({homeId})
         }
-    })
-    }
-    static getFavorites(callback){
-        fs.readFile(favoritespath, (err,data)=>{
-            let homesdata=[];
-            if(!err){
-                homesdata=JSON.parse(data); 
-            }
-            callback(homesdata); 
-        });
-    }
 }

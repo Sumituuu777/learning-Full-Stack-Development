@@ -56,10 +56,16 @@
 
                         <!-- View Details Button -->
                         <a 
-                            href="/home/<%= home.id %>"
+                            href="/home/<%= home._id %>"
                             class="block text-center bg-red-500 text-white py-2 rounded-xl hover:bg-red-600 transition"
                         >
                             View Details
+                        </a>
+                        <a 
+                            href="/remove-fav/<%= home._id %>"
+                            class="block text-center bg-red-500 text-white my-1 py-2 rounded-xl hover:bg-red-600 transition"
+                        >
+                            Remove
                         </a>
 
                     </div>

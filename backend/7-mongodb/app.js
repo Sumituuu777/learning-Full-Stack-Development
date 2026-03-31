@@ -14,7 +14,6 @@ app.set('view engine','ejs');
 app.set('views','views');
 
 mongoConnect((client)=>{
-    console.log(client);
     const server=http.createServer(app);
     server.listen(3000,()=>{
     console.log('server running at http://localhost:3000/');
