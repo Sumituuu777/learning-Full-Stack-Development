@@ -7,8 +7,14 @@ module.exports= class Favorites{
     }
     addFavorites(){ 
         const db=getdb();
-        return db.collection("favorites").insertOne(this)
-
+        return db.collection("favorites").findOne({homeId:this.homeId})
+        .then(existingfavs=>{
+            if(!existingfavs){
+                return db.collection("favorites").insertOne(this)
+            }
+            return Promise.resolve();
+        })
+       
     }
     static getFavorites(){
         const db=getdb();
