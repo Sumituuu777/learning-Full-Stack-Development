@@ -20,9 +20,13 @@
         <a href="/host/add-home?editing=false" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
             Add Home
         </a>
-        <% } %>
+        <form action="/logout" method="POST" class="inline-block">
+            <input type="submit" value="logout" name="logout" class="text-gray-700 hover:text-red-500 font-medium">
+        </form>          
+        <% }else{ %>
         <a href="/login" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
             login
         </a>
+        <% } %>
     </div>
 </nav>

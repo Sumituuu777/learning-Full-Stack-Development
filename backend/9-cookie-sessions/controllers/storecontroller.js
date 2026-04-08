@@ -1,8 +1,8 @@
 const Favorites = require('../Models/favorites');
-const Home=require('./../Models/home')
-exports.homepage=(req,res,next)=>{
+const Home=require('../Models/home')
+exports.homepage=(req,res,next)=>{ 
     Home.find().then((registeredHomes)=>{
-        res.render('store/index',{homes : registeredHomes,title:'Airbnb',isLoggedIn: req.isLoggedIn})
+        res.render('store/index',{homes : registeredHomes,title:'Airbnb',isLoggedIn: req.session.isLoggedIn})
 }).catch(
     (err)=>{
         console.log("error while fetching homes",err);    
@@ -11,7 +11,7 @@ exports.homepage=(req,res,next)=>{
 
 exports.availableHomes=(req,res,next)=>{
     Home.find().then((registeredHomes)=>{
-        res.render('store/AvailableHomes',{homes : registeredHomes,title:'availableHomes',isLoggedIn: req.isLoggedIn})
+        res.render('store/AvailableHomes',{homes : registeredHomes,title:'availableHomes',isLoggedIn: req.session.isLoggedIn})
 }).catch(
     (err)=>{
         console.log("error while fetching homes",err);    
@@ -26,7 +26,7 @@ exports.getDetails=(req,res,next)=>{
             console.log("home not found");
             return res.redirect('store/availablehomes');
         }
-        res.render('store/home-details',{home:home,title:'Home details',isLoggedIn: req.isLoggedIn})
+        res.render('store/home-details',{home:home,title:'Home details',isLoggedIn: req.session.isLoggedIn})
     }).catch((err)=>{
         console.log("ERROR occured in find my id",err);
     })
@@ -36,7 +36,7 @@ exports.getDetails=(req,res,next)=>{
 exports.getFavoritesList=(req,res,next)=>{
     Favorites.find().populate("homeId").then(favoriteIdHomes=>{
         const actualfavorites=favoriteIdHomes.map(favId=>favId.homeId);    
-            res.render('store/favorites-list',{favorites:actualfavorites,title:'favorites',isLoggedIn: req.isLoggedIn});  
+            res.render('store/favorites-list',{favorites:actualfavorites,title:'favorites',isLoggedIn: req.session.isLoggedIn});  
     })
 }
 

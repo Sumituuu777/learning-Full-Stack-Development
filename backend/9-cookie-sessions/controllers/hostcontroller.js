@@ -1,7 +1,7 @@
-const Home=require('./../Models/home')
+const Home=require('../Models/home')
 exports.getHostHomes=(req,res,next)=>{
     Home.find().then((registeredHomes)=>{
-        res.render('host/HostHomes',{homes : registeredHomes,title:'Host Homes',isLoggedIn: req.isLoggedIn})
+        res.render('host/HostHomes',{homes : registeredHomes,title:'Host Homes',isLoggedIn: req.session.isLoggedIn})
 }).catch(
     (err)=>{
         console.log("error while fetching homes",err);    
@@ -13,7 +13,7 @@ exports.getAddhome=(req,res,next)=>{
         title:'Add Home',
         editing:editing,
         home:'',
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.session.isLoggedIn
     });
 };
 
@@ -46,7 +46,7 @@ exports.getEdithome=(req,res,next)=>{
         editing:editing,
         homeId:homeId,
         home:home,
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.session.isLoggedIn
         })
         }).catch((err)=>{
         console.log("ERROR in Post add home",err);  
