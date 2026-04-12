@@ -1,0 +1,74 @@
+<%- include('../partials/head') %>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <%- include('../partials/nav') %>
+
+    <!-- Form Container -->
+    <div class="flex justify-center items-center flex-grow">
+        <% if(typeof errorMessages !=='undefined' && errorMessages && errorMessages.length>0){ %>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+            role="alert">
+                <ul class="list-disc list-inside space-y-1">
+                    <% errorMessages.forEach(err=>{ %>
+                        <li><%= err %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% }; %>
+        <form action="/signup" method="post"
+              class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6">
+
+            <h2 class="text-2xl font-bold text-blue-600 text-center">
+                Sign Up
+            </h2>
+
+            <!-- Input Field -->
+            <input 
+                type="text" 
+                name="firstname" 
+                placeholder="First Name"
+                value="<%= typeof oldInput !=='undefined'?oldInput.firstname : '' %>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+            <input 
+                type="text" 
+                name="lastname" 
+                placeholder="Last Name"
+                value="<%= typeof oldInput !=='undefined' ? oldInput.lastname : '' %>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+            <input 
+                type="text" 
+                name="email" 
+                placeholder="Enter youe Email"
+                value="<%= typeof oldInput !=='undefined' ? oldInput.email : '' %>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+            <input 
+                type="password" 
+                name="password" 
+                placeholder="password"
+                value="<%= typeof oldInput !=='undefined' ? oldInput.password : '' %>"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+            <input 
+                type="password" 
+                name="confirm_password" 
+                placeholder="confirm password"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+            
+            <!-- Submit Button -->
+            <input 
+                type="submit" 
+                value="signup"
+                class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-200 cursor-pointer"
+            >
+
+        </form>
+
+    </div>
+
+</body>
+</html>
