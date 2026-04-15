@@ -6,7 +6,8 @@
 
     <!-- Form Container -->
     <div class="flex justify-center items-center flex-grow">
-        
+    
+
         <form action="/login" method="post"
               class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6">
 
@@ -14,10 +15,16 @@
                 User Login
             </h2>
 
+            <% if(typeof errorMessages !=='undefined' && errorMessages){ %>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mr-5"
+            role="alert">
+                <span class="block sm:inline"><%=errorMessages%></span>
+            </div>
+            <% }; %>
             <!-- Input Field -->
             <input 
-                type="email" 
-                name="Email" 
+                type="input" 
+                name="email" 
                 placeholder="Enter youe Email"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             >

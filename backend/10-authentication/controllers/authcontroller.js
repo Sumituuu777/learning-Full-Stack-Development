@@ -1,14 +1,52 @@
 const {check, validationResult}=require('express-validator')
+const User = require('../Models/user')
+const bcrypt=require('bcryptjs');
+
 exports.getlogin=(req,res,next)=>{
-    res.render('auth/login',{title:'login',isLoggedIn: req.session.isLoggedIn})
+    res.render('auth/login',{title:'login',isLoggedIn: false})
 }
 exports.getsignup=(req,res,next)=>{
-    res.render('auth/signup',{title:'signup',isLoggedIn: req.session.isLoggedIn})
+    res.render('auth/signup',{title:'signup',isLoggedIn: false})
 }
-exports.postlogin=(req,res,next)=>{
-    req.session.isLoggedIn=true;
-    res.redirect('/')
+exports.postlogin= async (req,res,next)=>{
+    const {email,password}=req.body;
+    
+    try{
+        const user=await User.findOne({email:email});
+        if(!user){
+            return res.render('auth/login',
+                {title:'login',
+                isLoggedIn: false,
+                errorMessages: 'Invalid Email'
+            })
+        }
+        const isMatch= await bcrypt.compare(password,user.password);
+        if(!isMatch){
+            return res.render('auth/login', 
+                {title:'login',
+                isLoggedIn: false,
+                errorMessages: 'Invalid Password'
+            })
+        }
+        req.session.isLoggedIn=true;
+        req.session.user = {
+            _id: user._id.toString(),
+            email: user.email,
+            firstname: user.firstname,
+            userType: user.userType
+        };
+        req.session.save(err => {
+            if (err) console.log(err);
+        });
+        if(user.userType==='guest'){  res.redirect('/availablehomes');}
+        else{ res.redirect('/host/host-homes')}
+    }
+    catch(err){
+        console.log('err while logging in',err); 
+    }
+    
 }
+
 exports.postsignup=[
     // for firstname
     check('firstname')
@@ -54,23 +92,45 @@ exports.postsignup=[
     }),
 
     (req,res,next)=>{
-        const {firstname,lastname,email,password}=req.body;
+        const {firstname,lastname,email,password,userType}=req.body;
         const errors=validationResult(req)
+
         if(!errors.isEmpty()){
-            res.status(422).render('auth/signup',{
+            return res.status(422).render('auth/signup',{
                 title:'signup',
                 isLoggedIn: false,
                 errorMessages:errors.array().map(error=>error.msg),
+                oldInput:req.body
+            })
+        }
+        bcrypt.hash(password,12).then(hashedpassword=>{
+        const user=new User({
+                    firstname,
+                    lastname,
+                    email,
+                    password: hashedpassword,
+                    userType
+        })
+        
+        user.save().then((result)=>{
+            res.redirect('/login');
+        })
+        .catch((err)=>{
+            res.status(422).render('auth/signup',{
+                title:'signup',
+                isLoggedIn: false,
+                errorMessages:[err],
                 oldInput:{
                     firstname,
                     lastname,
                     email,
-                    password
+                    password,
+                    userType
                 }
             })
-        }else{
-        res.redirect('/login')
-        }
+        })
+        });
+   
     }
 ]
 exports.postlogout=(req,res,next)=>{
@@ -78,4 +138,4 @@ exports.postlogout=(req,res,next)=>{
         res.redirect('/login')
     })
     
-}
+};
