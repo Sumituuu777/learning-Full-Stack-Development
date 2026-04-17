@@ -9,6 +9,14 @@ const userSchema=new mongoose.Schema({
     favoritesHomes:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Home'
-    }]
+    }],
+    otp:{
+        type:String,
+        required:false
+    },
+    otpExpiry:{
+       type:Date,
+        required:false 
+    }
 });
 module.exports=mongoose.model('User',userSchema)
