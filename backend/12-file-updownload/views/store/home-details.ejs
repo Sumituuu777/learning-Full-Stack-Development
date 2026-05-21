@@ -46,7 +46,10 @@
             <p class="text-gray-700 leading-relaxed mb-6">
                 <%= home.description || "A comfortable and modern place to stay with all essential amenities. Book now to enjoy a great experience!" %>
             </p>
-
+            <a href="/rules/<%= home._id %>"
+                class="text-blue-500 hover:text-blue-800">
+                Download house Rules
+            </a>
             <!-- Book Now Button -->
             <a href="/book/<%= home._id %>"
                 class="block text-center bg-red-500 text-white py-3 rounded-xl text-xl hover:bg-red-600 transition">

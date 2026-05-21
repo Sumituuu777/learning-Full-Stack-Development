@@ -1,5 +1,9 @@
 const Home=require('../Models/home');
 const User = require('../Models/user');
+const path=require('path');
+const rootdir = require('../util/path');
+
+
 exports.homepage=(req,res,next)=>{ 
     Home.find().then((registeredHomes)=>{
         res.render('store/index',{homes : registeredHomes,title:'Airbnb',isLoggedIn: req.session.isLoggedIn,
@@ -88,3 +92,15 @@ exports.postremoveFavorite=(req,res,next)=>{
         console.log("Error in remove from favorites",err);
     }) 
 }
+exports.getHouseRules=[(req,res,next)=>{
+    if(!req.session.isLoggedIn){
+        return res.redirect('/login')
+    }
+    next()
+},
+(req,res,next)=>{
+    const homeId=req.params.homeId;
+    const rulesFilename='Sumit_Resume_IIIT_Ranchi.pdf'
+    const filepath=path.join(rootdir,'rules',rulesFilename)
+    res.download(filepath,'Rules.pdf')
+}]
